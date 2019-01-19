@@ -18,7 +18,7 @@ npm install storemanager
 
 With `<script>` include:
 
-Download the files in `/lib/` folder and include it in your HTML. Generally, the `.min` version is for production use.
+[Download the files](https://github.com/yqlim/StoreManager/releases/tag/v1.0.0) and include it in your HTML. Generally, the `.min` version is for production use.
 
 ## Usage
 
