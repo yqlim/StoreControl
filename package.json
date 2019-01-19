@@ -2,8 +2,8 @@
   "name": "storemanager",
   "version": "1.0.0",
   "description": "A lightweight JavaScript state management library/tool for both client and server side.",
-  "main": "index.js",
-  "browser": "index.min.js",
+  "main": "./lib/index.js",
+  "browser": "./lib/index.min.js",
   "license": "MIT",
   "author": "Yong Quan Lim <yqlim2394@gmail.com>",
   "scripts": {
