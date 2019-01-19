@@ -1,29 +1,29 @@
-# StoreManager.js
+# StoreControl.js
 
 ## Overview
 
-StoreManager.js aims to provide a simple store management interface to manage the stores in your web app.
+StoreControl.js aims to provide a simple store management interface to manage the stores in your web app.
 
 There are many popular modules with similar functionality like [Redux](https://redux.js.org/), [MobX](https://mobx.js.org/) or [Vuex](https://vuex.vuejs.org/). These modules are very useful and provide a more stable store management container for a more complicated apps. For a simple app, however, they seem overkill.
 
-This is why StoreManager.js exist.
+This is why StoreControl.js exist.
 
 ## Install
 
 With NPM:
 
 ```javascript
-npm install storemanager
+npm install storecontrol
 ```
 
 With `<script>` include:
 
-[Download the files](https://github.com/yqlim/StoreManager/releases/tag/v1.0.0) and include it in your HTML. Generally, the `.min` version is for production use.
+[Download the files](https://github.com/yqlim/StoreControl/releases/tag/v1.0.0) and include it in your HTML. Generally, the `.min` version is for production use.
 
 ## Usage
 
 ```javascript
-const state = new StoreManager();
+const state = new StoreControl();
 ```
 
 ## Methods
@@ -109,9 +109,9 @@ state.has(function(){})
 
 ### `.branch(id)`
 
-This method creates a store branch in the existing StoreManager instance.
+This method creates a store branch in the existing StoreControl instance.
 
-Baically, a branch is just setting a key (id) and automatically sets a new StoreManager instance as value. It's similar to setting `state.set(id, {})`. However, if you do not use the `.branch` method provided, your store value cannot enjoy the API provided by StoreManager.
+Baically, a branch is just setting a key (id) and automatically sets a new StoreControl instance as value. It's similar to setting `state.set(id, {})`. However, if you do not use the `.branch` method provided, your store value cannot enjoy the API provided by StoreControl.
 
 Same rules of `key` argument applies for `id` argument here.
 
@@ -124,7 +124,7 @@ The `StoreBranch` constructor is a private constructor and is not accessible pub
 
 ### `.of(id)`
 
-This method retrieves a StoreManager's branch for you.
+This method retrieves a StoreControl's branch for you.
 
 ```javascript
 state.of('x')
@@ -158,13 +158,13 @@ state.size()
 // -> 7
 ```
 
-If the length of any internal property of StoreManager instance is modified without using the methods provided, using `.size()` will throw a `RangeError`.
+If the length of any internal property of StoreControl instance is modified without using the methods provided, using `.size()` will throw a `RangeError`.
 
 ### `.asMap()`
 
-Returns the entire StoreManager tree as a literal object. The returned object will be the native object thus does not have access to the StoreManager API.
+Returns the entire StoreControl tree as a literal object. The returned object will be the native object thus does not have access to the StoreControl API.
 
-The returned object will not be an accurate representation of the StoreManager instance if any object/function/symbol instance is used as key.
+The returned object will not be an accurate representation of the StoreControl instance if any object/function/symbol instance is used as key.
 
 ```javascript
 state.asMap()

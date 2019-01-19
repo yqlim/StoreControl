@@ -1,4 +1,4 @@
-class StoreManager {
+class StoreControl {
 
   constructor(){
     const initDefault = () => ({ value: [] });
@@ -34,8 +34,8 @@ class StoreManager {
     if (i < 0){
       i = this.size();
       this.entries[i] = [];
-    } else if (this.values[i] instanceof StoreManager)
-      throw new TypeError(`Cannot replace ${key} because it is a user-defined StoreManager branch.`);
+    } else if (this.values[i] instanceof StoreControl)
+      throw new TypeError(`Cannot replace ${key} because it is a user-defined StoreControl branch.`);
 
     this.keys[i] = key;
     this.values[i] = val;
@@ -58,7 +58,7 @@ class StoreManager {
 
   branch(id){
     if (this.has(id))
-      throw new ReferenceError(`Property ${id} already exists in this StoreManager instance.`);
+      throw new ReferenceError(`Property ${id} already exists in this StoreControl instance.`);
 
     return this.set(id, new StoreBranch());
   }
@@ -67,10 +67,10 @@ class StoreManager {
     const ret = this.get(branch);
 
     if (ret === null)
-      throw new ReferenceError(`Branch ${branch} does not exist in this StoreManager instance.`);
+      throw new ReferenceError(`Branch ${branch} does not exist in this StoreControl instance.`);
 
     if (!this.isBranch(ret))
-      throw new TypeError(`"${branch}" key does not link to a StoreManager branch.`);
+      throw new TypeError(`"${branch}" key does not link to a StoreControl branch.`);
 
     return ret;
   }
@@ -114,11 +114,11 @@ class StoreManager {
 }
 
 
-class StoreBranch extends StoreManager {
+class StoreBranch extends StoreControl {
   constructor(){
     super();
   }
 }
 
 
-export default StoreManager
+export default StoreControl
