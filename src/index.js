@@ -34,8 +34,8 @@ class StoreControl {
     if (i < 0){
       i = this.size();
       this.entries[i] = [];
-    } else if (this.values[i] instanceof StoreControl)
-      throw new TypeError(`Cannot replace ${key} because it is a user-defined StoreControl branch.`);
+    } else if (this.values[i] instanceof StoreBranch)
+      throw new TypeError(`Cannot replace "${key}" because it is a user-defined StoreControl branch.`);
 
     this.keys[i] = key;
     this.values[i] = val;
@@ -58,19 +58,19 @@ class StoreControl {
 
   branch(id){
     if (this.has(id))
-      throw new ReferenceError(`Property ${id} already exists in this StoreControl instance.`);
+      throw new TypeError(`Property "${id}" already exists in this StoreControl instance.`);
 
     return this.set(id, new StoreBranch());
   }
 
-  of(branch){
-    const ret = this.get(branch);
+  of(branchID){
+    const ret = this.get(branchID);
 
     if (ret === null)
-      throw new ReferenceError(`Branch ${branch} does not exist in this StoreControl instance.`);
+      throw new ReferenceError(`Branch "${branchID}" does not exist in this StoreControl instance.`);
 
-    if (!this.isBranch(ret))
-      throw new TypeError(`"${branch}" key does not link to a StoreControl branch.`);
+    if (!(ret instanceof StoreBranch))
+      throw new TypeError(`"${branchID}" key does not link to a StoreControl branch.`);
 
     return ret;
   }
