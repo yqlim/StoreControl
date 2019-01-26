@@ -7,7 +7,7 @@
   "license": "MIT",
   "author": "Yong Quan Lim <yqlim2394@gmail.com>",
   "scripts": {
-    "build": "rollup -c && terser -c -m --toplevel --comments /license/i -o ./lib/index.min.js ./lib/index.js"
+    "build": "rollup -c && terser -c -m --comments /license/i -o ./lib/index.min.js ./lib/index.js"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
