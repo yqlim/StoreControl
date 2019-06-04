@@ -21,21 +21,22 @@ class StoreControl {
   }
 
   set(key, val){
-    if (typeof key === 'string'
-     || (typeof key === 'number' && key !== Infinity && key !== -Infinity)
-     || (typeof key === 'object' && key)
-     || typeof key === 'function'
-     || typeof key === 'symbol'
-    ); else
-      throw new TypeError('Key must be a string, object, function, valid number, symbol of Symbol(), or NaN.');
+    if (
+      key === null
+      || typeof key === 'boolean'
+      || (typeof key === 'number' && !isFinite(key))
+    ){
+      throw new TypeError('Key cannot be null, a boolean, or an infinite number.');
+    }
 
     let i = this.keys.indexOf(key);
 
     if (i < 0){
       i = this.size();
       this.entries[i] = [];
-    } else if (this.values[i] instanceof StoreBranch)
+    } else if (this.values[i] instanceof StoreBranch){
       throw new TypeError(`Cannot replace "${key}" because it is a user-defined StoreControl branch.`);
+    }
 
     this.keys[i] = key;
     this.values[i] = val;
@@ -105,8 +106,9 @@ class StoreControl {
   asMap(){
     const ret = {};
 
-    for (const [key, val] of this.entries)
-      ret[key] = this.isBranch(val) ? val.asMap() : val;
+    this.entries.forEach(([key, val]) => {
+      ret[key] = this.isBranch(key) ? val.asMap() : val;
+    });
 
     return ret;
   }
@@ -121,4 +123,4 @@ class StoreBranch extends StoreControl {
 }
 
 
-export default StoreControl
+export default StoreControl;
