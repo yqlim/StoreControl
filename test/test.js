@@ -21,14 +21,27 @@ function test(StoreControl){
     const has = key => store.has(key);
   
     const any = 'any';
-    const branch = 'branch';
+    const branch = Symbol('branch');
     const key = 'key';
     const val = 'value';
+
+    const fake = [
+      ['string', 'string'],
+      [Date, Date],
+      [[], []],
+      [{}, {}],
+      [Symbol(), Symbol()],
+      [BigInt(1), 1n],
+      [this, this],
+      [key, val]
+    ];
+
+    const length = fake.length + 1;
   
     const error = {
       invalidKey: {
         name: 'TypeError',
-        message: 'Key cannot be null, a boolean, or an infinite number.'
+        message: 'Key cannot be null, a boolean, NaN, or an infinite number.'
       },
       duplicateKey: {
         name: 'TypeError',
@@ -111,15 +124,29 @@ function test(StoreControl){
         assert.throws(setting(Infinity), error.invalidKey);
         assert.throws(setting(-Infinity), error.invalidKey);
       });
+
+      it('should throw if key is NaN.', function(){
+        assert.throws(setting(NaN), error.invalidKey);
+      });
+
+      it('should throw if key is undefined.', function(){
+        assert.throws(setting(undefined), error.invalidKey);
+      });
     
-      it('should not throw if key is valid.', function(){
-        assert.doesNotThrow(setting(key, val));
+      it('should not throw if key is any other values.', function(){
+        for (const [k, v] of fake.values()){
+          assert.doesNotThrow(setting(k, v));
+        }
       });
   
       it('should reflect in .keys, .values, and .entries if key is valid.', function(){
-        assert.strictEqual(store.keys.indexOf(key), 0);
-        assert.strictEqual(store.values.indexOf(val), 0);
-        assert.deepStrictEqual(store.entries[0], [key, val]);
+        const findIndex = (i, v) => fake.findIndex(pair => pair[i] === v);
+        fake.forEach(([k, v], i) => {
+          assert.notStrictEqual(store.keys.indexOf(k), -1);
+          assert.strictEqual(store.keys.indexOf(k), findIndex(0, k));
+          assert.strictEqual(store.values.indexOf(v), findIndex(1, v));
+          assert.deepStrictEqual(store.entries[i], fake[i]);
+        });
       });
   
     });
@@ -131,7 +158,9 @@ function test(StoreControl){
       });
   
       it('should get correct value if key is found.', function(){
-        assert.deepStrictEqual(get(key), val);
+        for (const [k, v] of fake.values()){
+          assert.strictEqual(get(k), v);
+        }
       });
   
     });
@@ -204,7 +233,7 @@ function test(StoreControl){
     describe('.size', function(){
   
       it('should return correctly.', function(){
-        assert.strictEqual(store.size(), 2);
+        assert.strictEqual(store.size(), length);
       });
   
     });
@@ -217,7 +246,7 @@ function test(StoreControl){
   
       it('should properly delete key and returns true if key is found.', function(){
         assert.strictEqual(store.delete(key), true);
-        assert.strictEqual(store.size(), 1);
+        assert.strictEqual(store.size(), length - 1);
       });
   
     });

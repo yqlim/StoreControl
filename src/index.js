@@ -23,10 +23,11 @@ class StoreControl {
   set(key, val){
     if (
       key === null
+      || key === undefined
       || typeof key === 'boolean'
-      || (typeof key === 'number' && !isFinite(key))
+      || (typeof key === 'number' && (!isFinite(key) || isNaN(key)))
     ){
-      throw new TypeError('Key cannot be null, a boolean, or an infinite number.');
+      throw new TypeError('Key cannot be null, a boolean, NaN, or an infinite number.');
     }
 
     let i = this.keys.indexOf(key);
@@ -58,8 +59,14 @@ class StoreControl {
   }
 
   branch(id){
-    if (this.has(id))
+    if (this.has(id)){
+      try {
+        id = JSON.stringify(id);
+      } catch(err){
+        id = String(id);
+      }
       throw new TypeError(`Property "${id}" already exists in this StoreControl instance.`);
+    }
 
     return this.set(id, new StoreBranch());
   }
