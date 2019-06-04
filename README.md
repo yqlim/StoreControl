@@ -46,8 +46,7 @@ state.set(b, 'b')
 const c = 0
 state.set(c, 'c')
 
-// NaN is accepted too
-const d = NaN
+const d = Symbol()
 state.set(d, 'd')
 
 // Any function instance
@@ -59,7 +58,7 @@ const f = Symbol()
 state.set(f, 'f')
 ```
 
-Using `null`, `Infinity`, `-Infinity`, `undefined`, `true`, and `false` as `key` will throw a `TypeError`.
+Using `null`, `Infinity`, `-Infinity`, `NaN`, `undefined`, `true`, and `false` as `key` will throw a `TypeError`.
 
 The `value` argument accepts any value.
 
@@ -67,12 +66,12 @@ The `value` argument accepts any value.
 
 Here, the `key` argument accepts any value. It's just that when you use any `key` value that is not supported in the `.set()` method, you will always get `null` returned.
 
-Be careful that whenever you use `NaN` or any object/function/symbol instance as `key` when you use `.set()`, you must always use the same reference to get the value back.
+Be careful that whenever you use any object/function/symbol instance as `key` when you use `.set()`, you must always use the same reference to get the value back.
 
 If we use the snippet above:
 
 ```javascript
-const g = NaN
+const g = Symbol()
 state.get(g)
 // -> null
 
@@ -81,7 +80,7 @@ state.get(d)
 
 /**
  * Because g === b is false.
- * Same concept applies to object/function/symbol instance.
+ * Same concept applies to object/function instance.
  */
 ```
 
