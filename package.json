@@ -6,6 +6,9 @@
   "browser": "./lib/index.min.js",
   "license": "MIT",
   "author": "Yong Quan Lim <yqlim2394@gmail.com>",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "mocha",
     "build": "rollup -c && terser -c -m --comments /license/i -o ./lib/index.min.js ./lib/index.js"
