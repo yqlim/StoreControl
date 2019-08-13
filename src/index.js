@@ -1,12 +1,11 @@
 class StoreControl {
 
   constructor(){
-    const initDefault = () => ({ value: [] });
-    Object.defineProperties(this, {
-      keys: initDefault(),
-      values: initDefault(),
-      entries: initDefault(),
-    });
+    ((...props) => {
+      for (let i = 0; i < props.length; i++){
+        Object.defineProperty(this, props[i], { value: [] });
+      }
+    })('keys', 'values', 'entries');
   }
 
   size(){
