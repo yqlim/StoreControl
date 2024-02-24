@@ -1,6 +1,6 @@
 {
   "name": "storecontrol",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A lightweight JavaScript state management library/tool for both client and server side.",
   "main": "./dist/index.js",
   "browser": "./dist/index.min.js",
