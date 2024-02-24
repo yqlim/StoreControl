@@ -110,7 +110,7 @@ state.has(function(){})
 
 This method creates a store branch in the existing StoreControl instance.
 
-Baically, a branch is just setting a key (id) and automatically sets a new StoreControl instance as value. It's similar to setting `state.set(id, {})`. However, if you do not use the `.branch` method provided, your store value cannot enjoy the API provided by StoreControl.
+Basically, a branch is just setting a key (id) and automatically sets a new StoreControl instance as value. It's similar to setting `state.set(id, {})`. However, if you do not use the `.branch` method provided, your store value cannot enjoy the API provided by StoreControl.
 
 Same rules of `key` argument applies for `id` argument here.
 
